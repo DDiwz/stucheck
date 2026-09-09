@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>แดชบอร์ด — STU-Check</title>
   <meta name="description" content="แดชบอร์ดหลัก STU-Check สร้างหรือเข้าร่วมห้องเรียน">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <nav class="navbar">
   <div class="navbar-inner">
-    <a href="/dashboard.html" class="logo">
+    <a href="dashboard.html" class="logo">
       <div class="logo-icon">S</div>
       STU-Check
     </a>
     <div class="nav-links" style="gap:8px">
-      <a href="/settings.html" id="user-display" class="badge badge-indigo" style="font-size:0.85rem; text-decoration:none; cursor:pointer;" title="คลิกที่นี่เพื่อตั้งค่าโปรไฟล์และโหมด"></a>
+      <a href="settings.html" id="user-display" class="badge badge-indigo" style="font-size:0.85rem; text-decoration:none; cursor:pointer;" title="คลิกที่นี่เพื่อตั้งค่าโปรไฟล์และโหมด"></a>
       <button id="logout-btn" class="btn btn-ghost btn-sm" style="color:var(--rose-600)">ออกจากระบบ</button>
     </div>
   </div>
@@ -73,11 +73,11 @@
 
 <div id="toast-container"></div>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
-<script src="/js/config.js"></script><script src="/js/utils.js"></script>
-<script src="/js/auth.js"></script>
-<script src="/js/room.js"></script>
-<script src="/js/history.js"></script>
-<script src="/js/settings.js"></script>
+<script src="js/config.js"></script><script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/room.js"></script>
+<script src="js/history.js"></script>
+<script src="js/settings.js"></script>
 <script>
   const user = Session.require();
   if (user) {
