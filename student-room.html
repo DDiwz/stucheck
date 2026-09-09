@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ห้องเรียน — STU-Check</title>
+  <meta name="description" content="ห้องเรียนของนักเรียน วิเคราะห์สีหน้าแบบ Privacy-First">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="student-page">
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="#" class="logo" onclick="return false">
+      <div class="logo-icon">S</div>
+      STU-Check
+    </a>
+    <div class="nav-links" style="gap:8px">
+      <span class="privacy-dot">ประมวลผลบนเครื่องของคุณ</span>
+      <a href="/settings.html" id="user-display-nav" class="badge badge-indigo" style="text-decoration:none; cursor:pointer;" title="คลิกที่นี่เพื่อตั้งค่าโปรไฟล์และโหมด"></a>
+    </div>
+  </div>
+</nav>
+
+<div class="student-body">
+  <!-- Left: Webcam -->
+  <div class="cam-section">
+    <div class="cam-wrap" id="cam-wrap">
+      <video id="student-video" autoplay muted playsinline></video>
+      <canvas id="overlay-canvas"></canvas>
+      <div class="cam-border" id="cam-border"></div>
+      <div class="cam-status-label" id="cam-status-label">คนสร้างห้องยังไม่ได้เริ่มเก็บข้อมูล</div>
+      <div class="cam-emotion-badge" id="emotion-badge">😐 Neutral</div>
+      <!-- Loading overlay -->
+      <div class="cam-overlay-msg" id="cam-overlay">
+        <div class="cam-overlay-icon"><i class="bi bi-camera-video-off-fill" style="color:rgba(255,255,255,0.8)"></i></div>
+        <div class="cam-overlay-text">กำลังเปิดกล้อง...<br><small>กรุณาอนุญาตการเข้าถึงกล้อง</small></div>
+      </div>
+    </div>
+
+    <!-- Privacy info below cam -->
+    <div class="privacy-banner">
+      <div class="privacy-banner-icon"><i class="bi bi-shield-lock-fill" style="color:var(--emerald)"></i></div>
+      <div class="privacy-banner-text">
+        <strong>ภาพวิดีโอไม่ถูกส่งออก:</strong> ระบบวิเคราะห์อารมณ์บนเครื่องของคุณโดยตรง ส่งเฉพาะรหัสตัวเลข (0/1/2) ไปยังครูเท่านั้น
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Info panel -->
+  <div class="student-info-panel">
+    <!-- Room info -->
+    <div class="info-card">
+      <h4>ข้อมูลห้องเรียน</h4>
+      <div class="info-row">
+        <span class="info-row-label">รหัสห้อง</span>
+        <span class="info-row-value" id="room-code-val" style="font-size:1.1rem;font-weight:800;color:var(--primary);letter-spacing:0.08em">——</span>
+      </div>
+      <div class="info-row">
+        <span class="info-row-label">วิชา</span>
+        <span class="info-row-value" id="subject-val">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-row-label">ห้องเรียน</span>
+        <span class="info-row-value" id="classroom-val">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-row-label">ครูผู้สอน</span>
+        <span class="info-row-value" id="host-val">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-row-label">ชื่อของคุณ</span>
+        <span class="info-row-value" id="student-name-val">—</span>
+      </div>
+    </div>
+
+    <!-- Status card -->
+    <div class="info-card">
+      <h4>สถานะการเก็บข้อมูล</h4>
+      <div style="margin:12px 0" id="collecting-status-display">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--slate-300)"></div>
+          <span class="text-sm text-muted">ยังไม่ได้เริ่มเก็บข้อมูล</span>
+        </div>
+      </div>
+      <p class="text-xs text-muted">รอสัญญาณจากครูผู้สอน เมื่อเริ่มแล้วกรอบกล้องจะมีขอบสีฟ้าวิ่งรอบๆ</p>
+    </div>
+
+    <!-- Controls -->
+    <div class="info-card">
+      <h4>ควบคุม</h4>
+      <div class="student-controls">
+        <button class="btn btn-amber btn-full" id="pause-btn">
+          <i class="bi bi-pause-fill"></i> หยุดเก็บข้อมูล
+        </button>
+        <button class="btn btn-danger btn-full" id="leave-btn">
+          <i class="bi bi-box-arrow-right"></i> ออกจากห้อง
+        </button>
+      </div>
+      <p class="text-xs text-muted" style="margin-top:10px">
+        หากออกเอง ข้อมูลของคุณจะไม่ถูกบันทึกในประวัติ
+      </p>
+    </div>
+
+    <!-- Emotion legend -->
+    <div class="info-card">
+      <h4>สีหน้าที่ตรวจจับ</h4>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+        <div class="flex items-center gap-2">
+          <span style="font-size:1.2rem">😊</span>
+          <span class="text-sm"><strong>Happy</strong> — ยิ้ม / มีความสุข</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span style="font-size:1.2rem">😐</span>
+          <span class="text-sm"><strong>Neutral</strong> — สีหน้าปกติ</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span style="font-size:1.2rem">😔</span>
+          <span class="text-sm"><strong>Sad/Tired</strong> — ตาหรี่ / เหนื่อย</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span style="font-size:1.2rem">🚫</span>
+          <span class="text-sm"><strong>No face</strong> — ไม่พบใบหน้า</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<!-- MediaPipe CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/config.js"></script><script src="/js/utils.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/room.js"></script>
+<script src="/js/settings.js"></script>
+<script src="/js/student.js"></script>
+<script>
+  const user = Session.require();
+  if (user) {
+    document.getElementById('user-display-nav').textContent = user.username;
+    initStudentPage();
+  }
+</script>
+</body>
+</html>

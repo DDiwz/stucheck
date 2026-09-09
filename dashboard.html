@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แดชบอร์ด — STU-Check</title>
+  <meta name="description" content="แดชบอร์ดหลัก STU-Check สร้างหรือเข้าร่วมห้องเรียน">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="/dashboard.html" class="logo">
+      <div class="logo-icon">S</div>
+      STU-Check
+    </a>
+    <div class="nav-links" style="gap:8px">
+      <a href="/settings.html" id="user-display" class="badge badge-indigo" style="font-size:0.85rem; text-decoration:none; cursor:pointer;" title="คลิกที่นี่เพื่อตั้งค่าโปรไฟล์และโหมด"></a>
+      <button id="logout-btn" class="btn btn-ghost btn-sm" style="color:var(--rose-600)">ออกจากระบบ</button>
+    </div>
+  </div>
+</nav>
+
+<main class="dashboard-page">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="dashboard-header">
+      <h1 class="dashboard-greeting" id="greeting-text">สวัสดี!</h1>
+      <p class="text-muted">เลือกบทบาทของคุณเพื่อเริ่มใช้งาน</p>
+    </div>
+
+    <!-- Role selection -->
+    <div class="role-cards">
+      <div class="role-card role-card-host" id="create-room-card" onclick="window.location.href='/create-room.html'" role="button" tabindex="0">
+        <div class="role-icon role-icon-host"><i class="bi bi-building-fill" style="color:var(--primary)"></i></div>
+        <h3>สร้างห้อง</h3>
+        <p class="text-muted">สำหรับครู / ผู้เก็บข้อมูล<br>เปิดห้องเรียนและติดตามอารมณ์นักเรียน</p>
+        <div style="margin-top:20px">
+          <span class="btn btn-primary btn-sm">สร้างห้องเรียน →</span>
+        </div>
+      </div>
+
+      <div class="role-card role-card-join" id="join-room-card" onclick="window.location.href='/join-room.html'" role="button" tabindex="0">
+        <div class="role-icon role-icon-join"><i class="bi bi-mortarboard-fill" style="color:var(--emerald)"></i></div>
+        <h3>เข้าร่วม</h3>
+        <p class="text-muted">สำหรับนักเรียน<br>กรอกรหัสห้องที่ครูให้มาเพื่อเข้าร่วม</p>
+        <div style="margin-top:20px">
+          <span class="btn btn-emerald btn-sm">เข้าร่วมห้อง →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="history-section">
+      <div class="history-header">
+        <h2>ประวัติการเก็บข้อมูล</h2>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-secondary btn-sm" id="export-all-btn">
+            <i class="bi bi-file-earmark-spreadsheet-fill"></i> Export ทั้งหมด
+          </button>
+          <button class="btn btn-danger btn-sm" id="clear-all-btn" onclick="clearAllHistory()">
+            <i class="bi bi-trash-fill"></i> ลบทั้งหมด
+          </button>
+        </div>
+      </div>
+      <div id="history-container"></div>
+    </div>
+
+  </div>
+</main>
+
+<div id="toast-container"></div>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+<script src="/js/config.js"></script><script src="/js/utils.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/room.js"></script>
+<script src="/js/history.js"></script>
+<script src="/js/settings.js"></script>
+<script>
+  const user = Session.require();
+  if (user) {
+    const name = user.displayName || user.username;
+    document.getElementById('greeting-text').textContent = `สวัสดี, ${name}!`;
+    document.getElementById('user-display').textContent = user.username;
+    renderHistoryTable('history-container');
+  }
+  document.getElementById('export-all-btn')?.addEventListener('click', () => History.exportAll());
+
+  // Keyboard support for role cards
+  document.querySelectorAll('.role-card').forEach(card => {
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') card.click();
+    });
+  });
+</script>
+</body>
+</html>

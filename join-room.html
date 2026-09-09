@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เข้าร่วมห้อง — STU-Check</title>
+  <meta name="description" content="กรอกรหัสห้องเพื่อเข้าร่วมชั้นเรียน">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="/dashboard.html" class="logo">
+      <div class="logo-icon">S</div>
+      STU-Check
+    </a>
+    <div class="nav-links">
+      <a href="/dashboard.html" class="btn btn-ghost btn-sm">← กลับ</a>
+    </div>
+  </div>
+</nav>
+
+<div class="join-page">
+  <div class="card card-lg" style="width:100%;max-width:420px">
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="width:60px;height:60px;border-radius:16px;background:var(--emerald-light);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 16px">
+        <i class="bi bi-mortarboard-fill" style="color:var(--emerald)"></i>
+      </div>
+      <h1 style="font-size:1.75rem">เข้าร่วมห้อง</h1>
+      <p>กรอกรหัสห้อง 6 หลักที่ครูให้มา</p>
+    </div>
+
+    <form id="join-room-form" class="form-stack" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="roomCode">รหัสห้อง</label>
+        <input class="room-code-input" type="text" id="roomCode" name="roomCode"
+          placeholder="_ _ _ _ _ _" maxlength="6" inputmode="numeric" autocomplete="off" required>
+        <span class="form-hint text-center" style="text-align:center">ตัวเลข 6 หลัก</span>
+      </div>
+
+      <button type="submit" class="btn btn-emerald btn-full btn-lg" id="join-submit-btn">
+        เข้าร่วมห้องเรียน →
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Privacy Modal -->
+<div class="modal-overlay" id="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+  <div class="modal">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div style="width:44px;height:44px;border-radius:12px;background:var(--emerald-light);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0">
+        <i class="bi bi-shield-lock-fill" style="color:var(--emerald)"></i>
+      </div>
+      <h2 class="modal-title" id="privacy-modal-title" style="margin:0">ข้อมูลความเป็นส่วนตัว</h2>
+    </div>
+    <div class="modal-body">
+      <p>ก่อนเข้าร่วมห้องเรียน โปรดรับทราบข้อมูลดังนี้:</p>
+      <ul style="margin:12px 0 0 16px;display:flex;flex-direction:column;gap:8px">
+        <li><strong>กล้องของคุณจะถูกเปิด</strong> เพื่อวิเคราะห์สีหน้า</li>
+        <li><strong>ภาพวิดีโอไม่ถูกส่งออกไปที่ใด</strong> — ประมวลผลบนเครื่องของคุณเท่านั้น</li>
+        <li>ระบบส่งเฉพาะ <strong>"รหัสอารมณ์"</strong> (เลข 0, 1, หรือ 2) ไปยังครูผู้สอน</li>
+        <li>คุณสามารถ <strong>กดหยุด</strong> การเก็บข้อมูลได้ตลอดเวลา</li>
+      </ul>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="cancel-privacy-btn">ยกเลิก</button>
+      <button class="btn btn-emerald" id="accept-privacy-btn">รับทราบและเข้าร่วม →</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="/js/config.js"></script><script src="/js/utils.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/room.js"></script>
+<script src="/js/settings.js"></script>
+<script>initJoinRoomPage();</script>
+</body>
+</html>

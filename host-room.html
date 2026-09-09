@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Host Dashboard — STU-Check</title>
+  <meta name="description" content="แดชบอร์ดของครูผู้เปิดห้อง ติดตามอารมณ์นักเรียนแบบเรียลไทม์">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="host-page">
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="/dashboard.html" class="logo">
+      <div class="logo-icon">S</div>
+      STU-Check
+    </a>
+    <div class="nav-links" style="gap:8px">
+      <span id="collecting-badge" class="badge badge-slate">ยังไม่ได้เริ่ม</span>
+      <a href="/settings.html" id="user-display" class="badge badge-indigo" style="text-decoration:none; cursor:pointer;" title="คลิกที่นี่เพื่อตั้งค่าโปรไฟล์และโหมด"></a>
+    </div>
+  </div>
+</nav>
+
+<!-- Sub-header: room info + actions -->
+<div class="host-header">
+  <div class="host-header-inner">
+    <div class="host-meta">
+      <div>
+        <span class="text-xs text-muted font-semibold">รหัสห้อง</span>
+        <div style="font-size:1.5rem;font-weight:800;color:var(--primary);letter-spacing:0.08em" id="room-code-display">——</div>
+      </div>
+      <div style="width:1px;height:36px;background:var(--border)"></div>
+      <div>
+        <span class="text-xs text-muted" id="room-subject"></span>
+        <div class="font-semibold text-sm" id="room-classroom"></div>
+      </div>
+    </div>
+    <div class="host-actions">
+      <div id="countdown-wrap" style="display:none;flex-direction:column;align-items:center;background:var(--primary-light);border-radius:var(--radius);padding:8px 16px">
+        <span class="countdown-num" id="countdown-num">60</span>
+        <span class="countdown-unit">วินาที</span>
+      </div>
+      <button class="btn btn-primary" id="start-btn"><i class="bi bi-play-fill"></i> เริ่มเก็บข้อมูล</button>
+      <button class="btn btn-danger" id="end-btn"><i class="bi bi-stop-fill"></i> จบการเก็บข้อมูล</button>
+      <button class="btn btn-secondary" id="export-btn"><i class="bi bi-file-earmark-spreadsheet-fill"></i> Export Excel</button>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="padding-top:0">
+  <!-- Stats row -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">ผู้เข้าร่วม</div>
+      <div class="stat-value" id="participant-count">0</div>
+      <div class="stat-sub">คนในห้องขณะนี้</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">เวลาที่ผ่านไป</div>
+      <div class="stat-value" id="elapsed-time">00:00</div>
+      <div class="stat-sub">นาที:วินาที</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">รอบที่เก็บแล้ว</div>
+      <div class="stat-value" id="round-count">0</div>
+      <div class="stat-sub">รอบ (ทุก 60 วิ)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">ครูผู้สร้างห้อง</div>
+      <div class="stat-value" style="font-size:1.2rem" id="room-host">—</div>
+      <div class="stat-sub" id="room-subject-small"></div>
+    </div>
+  </div>
+
+  <!-- Body: participants + emotion panel -->
+  <div class="host-body">
+    <!-- Participant list -->
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <h3 style="margin:0">รายชื่อผู้เข้าร่วม</h3>
+        <span class="badge badge-indigo" id="participant-count-badge">0 คน</span>
+      </div>
+      <div id="participant-list" style="min-height:160px;max-height:480px;overflow-y:auto">
+        <div class="history-empty">
+          <div class="history-empty-icon">👥</div>
+          <p>รอนักเรียนเข้าร่วม...<br><span class="text-sm">แชร์รหัสห้องให้นักเรียนของคุณ</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Emotion panel -->
+    <div class="emotion-panel">
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--border)">
+          <h3 style="margin:0">สีหน้าเฉลี่ยรวม</h3>
+        </div>
+        <div id="emotion-panel">
+          <div class="emotion-display">
+            <div class="emotion-big">⏳</div>
+            <div class="emotion-label">รอเริ่มเก็บข้อมูล</div>
+            <div class="emotion-sub">กด "เริ่มเก็บข้อมูล" เพื่อดูผลลัพธ์</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room code share card -->
+      <div class="card" style="margin-top:16px;text-align:center">
+        <p class="text-xs text-muted font-semibold" style="text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">แชร์รหัสนี้ให้นักเรียน</p>
+        <div class="room-code-display">
+          <div class="room-code-number" id="room-code-display-2">——</div>
+        </div>
+        <p class="text-xs text-muted" style="margin-top:10px">นักเรียนเปิด STU-Check → เข้าร่วม → กรอกรหัส</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/config.js"></script><script src="/js/utils.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/room.js"></script>
+<script src="/js/history.js"></script>
+<script src="/js/settings.js"></script>
+<script src="/js/host.js"></script>
+<script>
+  const user = Session.require();
+  if (user) {
+    document.getElementById('user-display').textContent = user.username;
+    initHostPage();
+    // Sync room code to share card
+    const code = new URLSearchParams(location.search).get('code');
+    if (code) document.getElementById('room-code-display-2').textContent = code;
+    // Keep participant count badge in sync
+    setInterval(() => {
+      const cnt = document.getElementById('participant-count')?.textContent || '0';
+      const badge = document.getElementById('participant-count-badge');
+      if (badge) badge.textContent = `${cnt} คน`;
+    }, 1000);
+  }
+</script>
+</body>
+</html>

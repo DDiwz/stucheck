@@ -1,0 +1,16 @@
+# ── Secrets (NEVER commit these) ──────────────
+server/.env
+*.env
+
+# ── Dependencies ───────────────────────────────
+node_modules/
+server/node_modules/
+
+# ── JSON file database (replaced by MongoDB) ──
+server/data/users.json
+server/data/history.json
+
+# ── OS / Editor ───────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/settings.json

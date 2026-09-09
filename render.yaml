@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: stu-check-server
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGODB_URI
+        sync: false          # fill this in Render dashboard
+      - key: FRONTEND_URL
+        sync: false          # e.g. https://yourname.github.io/stucheck
+      - key: NODE_ENV
+        value: production

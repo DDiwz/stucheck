@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สมัครสมาชิก — STU-Check</title>
+  <meta name="description" content="สมัครสมาชิก STU-Check เพื่อเริ่มใช้งานระบบติดตามอารมณ์นักเรียน">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="auth-page">
+  <!-- Left panel -->
+  <div class="auth-left">
+    <div class="auth-left-content">
+      <div class="logo" style="justify-content:center;color:white;margin-bottom:24px">
+        <div class="logo-icon">S</div>
+        STU-Check
+      </div>
+      <h1>เริ่มต้น<br>สร้างห้องเรียน<br>ที่ดีขึ้น</h1>
+      <p style="margin-top:16px">วิเคราะห์อารมณ์นักเรียนแบบ Privacy-First<br>ปลอดภัย 100% ไม่มีภาพถูกส่งออก</p>
+      <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:10px;opacity:0.9">
+          <i class="bi bi-shield-check-fill"></i><span style="font-size:0.9rem">ภาพหน้าไม่ถูกส่งออกจากเครื่อง</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;opacity:0.9">
+          <i class="bi bi-lightning-charge-fill"></i><span style="font-size:0.9rem">ผลลัพธ์เรียลไทม์ทุก 1 นาที</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;opacity:0.9">
+          <i class="bi bi-file-earmark-spreadsheet-fill"></i><span style="font-size:0.9rem">Export Excel ได้ทันที</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="auth-right">
+    <div class="auth-form-wrap">
+      <h2 class="auth-form-title">สมัครสมาชิก</h2>
+      <p class="auth-form-sub">สร้างบัญชีเพื่อเริ่มใช้งาน STU-Check</p>
+
+      <form id="register-form" class="form-stack" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="username">Username <span style="color:var(--rose-600)">*</span></label>
+          <input class="form-input" type="text" id="username" name="username"
+            placeholder="ตั้ง Username ของคุณ" autocomplete="username" required>
+          <span class="form-error" id="username-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="displayName">ชื่อ-นามสกุล <span class="text-muted text-xs">(ไม่บังคับ — เพิ่มได้ภายหลัง)</span></label>
+          <input class="form-input" type="text" id="displayName" name="displayName"
+            placeholder="เช่น นายมนัส ขาว" autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">รหัสผ่าน <span style="color:var(--rose-600)">*</span></label>
+          <input class="form-input" type="password" id="password" name="password"
+            placeholder="อย่างน้อย 8 ตัวอักษร" autocomplete="new-password" required minlength="8">
+          <span class="form-hint">รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร</span>
+          <span class="form-error" id="password-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="confirmPassword">ยืนยันรหัสผ่าน <span style="color:var(--rose-600)">*</span></label>
+          <input class="form-input" type="password" id="confirmPassword" name="confirmPassword"
+            placeholder="กรอกรหัสผ่านอีกครั้ง" autocomplete="new-password" required>
+          <span class="form-error" id="confirmPassword-error"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full btn-lg" id="register-submit-btn">
+          สมัครสมาชิก
+        </button>
+      </form>
+
+      <p style="text-align:center;margin-top:20px;font-size:0.9rem;color:var(--text-2)">
+        มีบัญชีแล้ว? <a href="/login.html" class="auth-link">เข้าสู่ระบบ</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="/js/config.js"></script><script src="/js/utils.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/settings.js"></script>
+<script>initRegisterPage();</script>
+</body>
+</html>
