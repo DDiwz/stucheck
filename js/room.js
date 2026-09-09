@@ -1,4 +1,4 @@
-/**
+﻿/**
  * room.js — Room creation, joining, and cross-device sync
  * Works in two modes:
  *   ONLINE:  connected to Node.js/Socket.IO server across devices

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * settings.js — User profile and Theme settings
  */
 

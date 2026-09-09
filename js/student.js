@@ -1,4 +1,4 @@
-/**
+﻿/**
  * student.js — Student room with MediaPipe FaceMesh emotion detection
  * Privacy-first: only emotion codes (0/1/2/3) are sent over network, never image data.
  * Cross-device sync via Socket.IO.
@@ -24,7 +24,7 @@ async function initStudentPage() {
 
   const params = new URLSearchParams(window.location.search);
   const code = params.get('code');
-  if (!code) { window.location.href = '/dashboard.html'; return; }
+  if (!code) { window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\dashboard.html'; return; }
 
   // 1. Get room info from local or server
   let room = Rooms.get(code);
@@ -33,7 +33,7 @@ async function initStudentPage() {
   }
   if (!room) {
     showToast('ไม่พบห้องเรียน อาจถูกปิดแล้ว', 'error');
-    setTimeout(() => window.location.href = '/dashboard.html', 2000);
+    setTimeout(() => window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\dashboard.html', 2000);
     return;
   }
 
@@ -72,7 +72,7 @@ async function initStudentPage() {
           }
         } else if (res && !res.ok) {
           showToast(res.error || 'ไม่สามารถเข้าร่วมห้องได้', 'error');
-          setTimeout(() => window.location.href = '/dashboard.html', 2000);
+          setTimeout(() => window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\dashboard.html', 2000);
         }
       });
     });
@@ -90,12 +90,12 @@ async function initStudentPage() {
 
     socket.on('session_ended', () => {
       showToast('ครูจบการเก็บข้อมูลแล้ว', 'warning');
-      setTimeout(() => window.location.href = '/dashboard.html', 2000);
+      setTimeout(() => window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\dashboard.html', 2000);
     });
 
     socket.on('host_disconnected', () => {
       showToast('ผู้สอนตัดการเชื่อมต่อ ห้องเรียนถูกปิดแล้ว', 'warning');
-      setTimeout(() => window.location.href = '/dashboard.html', 2000);
+      setTimeout(() => window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\dashboard.html', 2000);
     });
   }
 
@@ -117,7 +117,7 @@ async function initStudentPage() {
   Bus.on('session_ended', ({ roomCode }) => {
     if (roomCode !== code) return;
     showToast('ครูจบการเก็บข้อมูลแล้ว', 'warning');
-    setTimeout(() => window.location.href = '/dashboard.html', 2000);
+    setTimeout(() => window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\dashboard.html', 2000);
   });
 
   Bus.on('round_complete', ({ roomCode }) => {
@@ -347,5 +347,5 @@ function leaveRoom() {
     studentState.socket.disconnect();
   }
   Bus.emit('student_left', { roomCode: studentState.room?.code, socketId: STUDENT_SID });
-  window.location.href = '/dashboard.html';
+  window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\dashboard.html';
 }

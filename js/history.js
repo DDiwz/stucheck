@@ -1,4 +1,4 @@
-/**
+﻿/**
  * history.js — Session history CRUD + Excel export via SheetJS
  */
 

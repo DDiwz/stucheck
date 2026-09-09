@@ -1,4 +1,4 @@
-/**
+﻿/**
  * utils.js — Shared helper utilities for STU-Check
  */
 
@@ -50,7 +50,7 @@ const Session = {
   clear() { Storage.remove(this.KEY); },
   require() {
     const user = this.get();
-    if (!user) { window.location.href = '/login.html'; return null; }
+    if (!user) { window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\login.html'; return null; }
     return user;
   }
 };

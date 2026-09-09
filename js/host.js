@@ -1,4 +1,4 @@
-/**
+﻿/**
  * host.js — Host live dashboard logic
  * Manages timer, participant list, emotion aggregation, controls, and Socket.IO cross-device sync.
  */
@@ -23,12 +23,12 @@ function initHostPage() {
 
   const params = new URLSearchParams(window.location.search);
   const code = params.get('code');
-  if (!code) { window.location.href = '/dashboard.html'; return; }
+  if (!code) { window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\dashboard.html'; return; }
 
   const room = Rooms.get(code);
   if (!room || room.hostId !== user.id) {
     showToast('ไม่พบห้องหรือคุณไม่ใช่เจ้าของห้อง', 'error');
-    setTimeout(() => window.location.href = '/dashboard.html', 2000);
+    setTimeout(() => window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\dashboard.html', 2000);
     return;
   }
 
@@ -187,7 +187,7 @@ function endSession() {
   Rooms.remove(code);
 
   showToast('จบการเก็บข้อมูลแล้ว บันทึกประวัติเรียบร้อย', 'success');
-  setTimeout(() => window.location.href = '/dashboard.html', 1500);
+  setTimeout(() => window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\dashboard.html', 1500);
 }
 
 /* ── UI Renderers ────────────────────────────────────── */

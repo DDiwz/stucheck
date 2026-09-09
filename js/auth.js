@@ -1,4 +1,4 @@
-/**
+﻿/**
  * auth.js — Register, Login, Logout for STU-Check
  * Connects to the backend server with persistent JSON storage.
  */
@@ -78,7 +78,7 @@ const Auth = {
   /* Logout */
   logout() {
     Session.clear();
-    window.location.href = '/index.html';
+    window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\index.html';
   }
 };
 
@@ -118,7 +118,7 @@ function initRegisterPage() {
         return;
       }
       showToast('สมัครสมาชิกสำเร็จ! กำลังไปหน้าเข้าสู่ระบบ...', 'success');
-      setTimeout(() => window.location.href = '/login.html', 1000);
+      setTimeout(() => window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\login.html', 1000);
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
@@ -156,7 +156,7 @@ function initLoginPage() {
         return;
       }
       showToast('เข้าสู่ระบบสำเร็จ!', 'success');
-      setTimeout(() => window.location.href = '/dashboard.html', 800);
+      setTimeout(() => window.location.href = (\$2 => \$2.split('/').slice(0,-1).join('/') || '.')(window.location.pathname) + '/\dashboard.html', 800);
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
