@@ -51,7 +51,8 @@ async function connectDB() {
     return true;
   } catch (err) {
     console.error('[DB] ❌  MongoDB connection failed:', err.message);
-    process.exit(1);
+    console.warn('[DB] ⚠️  Server is running in fallback mode. Check your MONGODB_URI and Network Access settings.');
+    return false;
   }
 }
 
